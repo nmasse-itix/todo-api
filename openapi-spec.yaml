@@ -1,0 +1,41 @@
+swagger: '2.0'
+info:
+    title: 'TODO List API'
+    description: Manage TODO's
+    version: '1.0.0'
+paths:
+    /todo:
+        get:
+            summary: 'Get TODO'
+            description: 'Get all TODOs'
+            operationId: GetTODO
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: OK
+                    schema:
+                        $ref: '#/definitions/TODO'
+definitions:
+    TODO:
+        title: Root Type for TODO
+        description: a TODO
+        type: object
+        properties:
+            id:
+                format: int32
+                type: integer
+            message:
+                type: string
+        example: >-
+            { "id": 1, "message": "a TODO" }
+securityDefinitions:
+  apikey:
+    type: apiKey
+    description: Use a 3scale API Key
+    name: user_key
+    in: query
+security:
+- apikey: []
