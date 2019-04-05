@@ -1,15 +1,16 @@
-# API Automation Demo
+# iPaaS API Automation Demo
 
 ## Deliver the demo
 
-*In this demo, we will see how we can create very easily REST APIs using the iPaaS capabilities of Red Hat Integration.*
-*We will also discover how this API can be automatically discovered and managed as any other API.*
-*Last but not least, we will see how this API can be deployed in a TEST and a PROD environment in an automated manner using a CI/CD pipeline.*
+*In this demo, we will see how we can create very easily a REST API using the iPaaS capabilities of Red Hat Integration.*
+*We will also discover how this REST API can be automatically managed as any other API.*
+*This API will be deployed in a TEST and a PROD environment in an automated manner using a CI/CD pipeline.*
+*Last but not least, we will conclude this demo by discussing API Mocking and Testing.*
 
 *The whole demo runs on OpenShift in containers.*
 
 *Let's start with a very simple REST API that expose our TODO List.*
-*The TODO List is currently managed by an existing application and we will need to integrate with it.*
+*The TODO List is currently managed by an existing application and we will need to integrate with it in order to expose our TODO List as an API.*
 
 - Open the **TODO List** application
 - Insert a new TODO
@@ -19,7 +20,8 @@
 - Go on Fuse Online
 - Create an integration based on the **API Provider** connection
 
-*We use a contract-first approach and since I have no pre-existing API Contract, I will create a new one.*
+*We use a contract-first approach to break dependencies between projects.*
+*Let's create a new API Contract from scratch.*
 
 - Select **Create from scratch**
 - Create a resource named `TODO` with two fields: `id` and `message`
@@ -71,7 +73,7 @@
 - Set the **API test GET request** to `/todo`
 - Click **Update & test in Staging Environment**
 
-*Now, we can test our API is published and live!*
+*Now, we can check that our API is published and live!*
 
 - Copy the curl command line, paste it in a terminal and add `-k` to the end
 
@@ -91,19 +93,55 @@
 - Open the `TODO List (BUILD)` project
 - Go to **Build** > **Pipelines**
 - Click **Start pipeline**
+
+*While the Pipeline is running, let's talk about API Mocking and Testing.*
+*If we wanted to expose a Mock of our API to our future API Consumers, we could define some samples and load them in Microcks.*
+*The Mocks are defined as examples in a Postman collection, a SOAPUI project or an OpenAPI Specification 3.0.*
+*For this demo, I chose to build a Postman Collection. The Postman Collection has an example defining a sample response.*
+*Let's query our Mock. Yes, it's live and working.*
+*Microcks can also do API Testing.*
+*Expectations are defined as Assertions in a Postman Collection or a SOAPUI Project. The OpenAPI Specification can also be used to check if the implementation conforms to it.*
+*Let's wait for our pipeline to finish so that we can test our implementation.*
+
 - Wait for the Pipeline to complete
+
+*Let's test our implementation using the Postman test policy.*
+*Our implementation conforms to our specifications.*
+*I exibited the manual way, but API testing is usually part of the CI/CD pipeline.*
+
+*Now let's have a look at our Developer Portal.*
+
 - Go to the 3scale Developer Portal
 - Login with `john`
+
+*I can find my API Keys.*
+
 - Go to **Applications**
 - Copy the API Key for the `TODO List API (PROD, v1.0.0)`
+
+*And the API Documentation.*
+
 - Go to **Documentation** > `TODO List API (PROD, v1.0.0)`
+
+*Ho, this API seems useful! Let's try it.*
+
 - Expand the **GET /todo** method
 - Click on the **red exclamation mark**
 - Fill-in the API Key you copied earlier
 - Click **Authorize**
 - Click **Try it out!**
 
-*Our API is live in the production environment and working.*
+*The API is live in the production environment and it's working.*
+
+*In this demo, we showed:*
+
+- *How we can build a REST API in minutes, including the OpenAPI Specification*
+- *This API exposes data from a database.*
+- *This API can be auto-discovered and managed as any other API.*
+- *The deployment in subsequent environments, namely test and production is fully automated, thanks to a CI/CD Pipeline.*
+- *The API Documentation is published in the Developer Portal, allowing API consumers to start using it.*
+- *Mocking can be used very easily to break dependencies between projects.*
+- *Testing can be used to verify the API meets our expectations.*
 
 ## Reset the demo
 
