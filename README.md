@@ -17,14 +17,17 @@
 *Now, let's craft a REST API that integrates with this application to show our TODOs from the list.*
 
 - Go on Fuse Online
-- Create an integration based on a REST API
+- Create an integration based on the **API Provider** connection
 
 *We use a contract-first approach and since I have no pre-existing API Contract, I will create a new one.*
 
-- Select **build from scratch**
+- Select **Create from scratch**
 - Create a resource named `TODO` with two fields: `id` and `message`
 - Create the `/todo` GET method that returns a `TODO` resource with `200 OK`
+- Set the API Title to `TODO List API`
+- Set the version to `1.0.0`
 - Save the API contract
+- Give a name to the new integration: `TODO`
 
 *The list of our TODO is stored in a Database.*
 
@@ -255,3 +258,12 @@ oc set triggers bc/deploy-api -n todo-build --from-image=fuse/i-todo:1
 
 Go to your 3scale Admin Portal and add the API Catalog page as explained here:
 TODO
+
+Provision Microcks in the `todo-build` project:
+
+```sh
+oc project todo-build
+oc create -f https://raw.githubusercontent.com/microcks/microcks/master/install/openshift/openshift-persistent-full-template.yml -n openshift
+oc new-app --template=microcks-persistent --param=APP_ROUTE_HOSTNAME=microcks-microcks.$WILDCARD --param=KEYCLOAK_ROUTE_HOSTNAME=microcks-keycloak.$WILDCARD --param=OPENSHIFT_MASTER=https://your.openshift.console --param=OPENSHIFT_OAUTH_CLIENT_NAME=microcks-client
+```
+
